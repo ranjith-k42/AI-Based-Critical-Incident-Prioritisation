@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "node server/index.cjs",
+    "dev:all": "concurrently \"node server/index.cjs\" \"vite\"",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"
@@ -17,6 +19,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
