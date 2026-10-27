@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { History, Lock, Search, Filter, Calendar, ArrowRight, UserCheck, ShieldCheck } from 'lucide-react';
+import { History, Lock, Search, Filter, Calendar, ArrowRight, UserCheck, ShieldCheck, Download } from 'lucide-react';
 import { fetchAuditLogs } from '../api/client';
+import { exportToCSV, prepareAuditLogsForExport } from '../utils/exportCSV';
 
 export const AuditTrailPage: React.FC = () => {
   const [logs, setLogs] = useState<any[]>([]);
@@ -60,9 +61,19 @@ export const AuditTrailPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-800 text-xs">
-          <span className="text-slate-400 block text-[10px]">Total Logged Actions</span>
-          <span className="font-mono font-bold text-purple-300 text-sm">{logs.length} Entries</span>
+        <div className="flex items-center gap-3">
+          <div className="bg-slate-950 px-4 py-2.5 rounded-2xl border border-slate-800 text-xs">
+            <span className="text-slate-400 block text-[10px]">Total Logged Actions</span>
+            <span className="font-mono font-bold text-purple-300 text-sm">{logs.length} Entries</span>
+          </div>
+          <button
+            onClick={() => exportToCSV(prepareAuditLogsForExport(logs), 'audit_logs')}
+            disabled={logs.length === 0}
+            className="flex items-center gap-2 px-4 py-2.5 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 text-purple-300 rounded-2xl text-xs font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Export CSV
+          </button>
         </div>
       </div>
 

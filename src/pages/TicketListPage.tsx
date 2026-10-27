@@ -12,9 +12,11 @@ import {
   ChevronRight,
   Eye,
   PlusCircle,
-  Sparkles
+  Sparkles,
+  Download
 } from 'lucide-react';
 import { fetchTickets } from '../api/client';
+import { exportToCSV, prepareTicketsForExport } from '../utils/exportCSV';
 
 interface TicketListPageProps {
   currentUser: any;
@@ -119,13 +121,23 @@ export const TicketListPage: React.FC<TicketListPageProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={() => onNavigate('create-ticket')}
-            className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md transition"
-          >
-            <PlusCircle className="w-4 h-4" />
-            <span>Create Ticket</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => exportToCSV(prepareTicketsForExport(tickets), 'tickets')}
+              disabled={tickets.length === 0}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Download className="w-4 h-4" />
+              <span>Export CSV</span>
+            </button>
+            <button
+              onClick={() => onNavigate('create-ticket')}
+              className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md transition"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>Create Ticket</span>
+            </button>
+          </div>
         </div>
 
         {/* Search & Filter Controls */}

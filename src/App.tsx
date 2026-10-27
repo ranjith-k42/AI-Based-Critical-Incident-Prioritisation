@@ -18,6 +18,8 @@ import { EdgeCasesPage } from './pages/EdgeCasesPage';
 import { StakeholderEthicsPage } from './pages/StakeholderEthicsPage';
 import { DeploymentChecklistPage } from './pages/DeploymentChecklistPage';
 import { fetchUsers } from './api/client';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { ToastProvider } from './components/Toast';
 
 export function App() {
   const [users, setUsers] = useState<any[]>([]);
@@ -69,6 +71,8 @@ export function App() {
   }
 
   return (
+    <ErrorBoundary>
+    <ToastProvider>
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
       
       {/* Top Header & Role Navigation */}
@@ -200,6 +204,8 @@ export function App() {
       </footer>
 
     </div>
+    </ToastProvider>
+    </ErrorBoundary>
   );
 }
 
